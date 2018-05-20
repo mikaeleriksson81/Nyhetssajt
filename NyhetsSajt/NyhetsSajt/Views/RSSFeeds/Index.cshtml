@@ -1,0 +1,70 @@
+﻿<br />
+
+<div>
+
+    RSS Feeds hämtades klockan: {{feedUpdated | date:'HH:mm,   yyyy-MM-dd MMM  '}} (sidan uppdateras automatiskt)
+
+
+    <div id="selectedFeed" ng-if="!!selectedFeed">
+        <h1>{{selectedFeed.title}}</h1>
+        {{selectedFeed.description}}
+        <br />
+        <a href="{{ selectedFeed.link }}" target="_blank">{{ selectedFeed.link }}</a>        
+    </div>
+
+    <div ng-if="selectedCategory || selectedFeed">
+        Filtrering:
+        <text ng-if="selectedCategory">
+            {{selectedCategory}} <a href="#" ng-click="clearCategory()">X</a>
+        </text>
+        <text ng-if="selectedFeed">
+            {{selectedFeed.title}} <a href="#" ng-click="clearFeed()">X</a>
+        </text>
+    </div>
+
+    <div class="row auto-clear">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 feedItem" ng-repeat="item in feedItems | isCategory:selectedCategory | isFeed:selectedFeed.title">
+            <table>
+                <tr ng-click="redirectToUrl(item.link)">
+                    <td colspan="2">
+                        {{ item.pubDate }}
+                    </td>
+                </tr>
+                <tr ng-click="redirectToUrl(item.link)">
+                    <td colspan="2">
+                        <h3>{{ item.title }}</h3>
+                    </td>
+                </tr>
+
+                <tr ng-click="redirectToUrl(item.link)">
+                    <td colspan="2">
+
+                        <div class="description" ng-bind-html="item.description">
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <text ng-if="!!item.category">
+                            Kategori: <a href="#" ng-click="setCategory(item.category)">{{item.category}}</a>
+                        </text>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Feed: <a href="#" ng-click="setFeed(item.rssFeed)">{{item.rssFeed.title}}</a>
+                        @*endast Expressen har en fungerande logga*@
+                        @*<img ng-src="{{item.rssFeed.image}}" ng-if="!!item.rssFeed.image" />*@
+                    </td>
+                    <td>
+                        
+                        <a href="{{ item.link }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Läs mer</a>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+</div>

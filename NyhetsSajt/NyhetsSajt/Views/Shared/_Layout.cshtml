@@ -15,8 +15,11 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+    <script src="~/js/angularJs/RSSFeed.js"></script>
 </head>
-<body>
+<body ng-app="RSSFeedApp" ng-controller="RSSFeedCtrl" ng-cloak>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -30,9 +33,36 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Feeds
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li>
+                                <a href="#" ng-click="clearFeed()">-- Alla --</a>
+                            </li>
+                            <li ng-repeat="item in feedItems | uniqueFeed : 'title'">
+                                <a href="#" ng-click="setFeed(item.rssFeed)">{{item.rssFeed.title}}</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Kategorier
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li>
+                                <a href="#" ng-click="clearCategory()">-- Alla --</a>
+                            </li>
+                            <li ng-repeat="item in feedItems | uniqueCategory : 'category' | orderBy:'category'">
+                                <a href="#" ng-click="setCategory(item.category)">{{item.category}}</a>
+                            </li>
+                        </ul>
+
+                    </li>                    
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -42,7 +72,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - NyhetsSajt</p>
+            <p>&copy; 2018 - Mikael Eriksson</p>
         </footer>
     </div>
 

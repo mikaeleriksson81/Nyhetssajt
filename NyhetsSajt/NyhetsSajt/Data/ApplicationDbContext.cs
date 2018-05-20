@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NyhetsSajt.Models;
+using NyhetsSajt.Models.Entites;
 
 namespace NyhetsSajt.Data
 {
@@ -13,7 +14,10 @@ namespace NyhetsSajt.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            
         }
+
+        public DbSet<RSSUrl> RSSUrls { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

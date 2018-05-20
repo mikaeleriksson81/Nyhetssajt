@@ -50,7 +50,7 @@ namespace NyhetsSajt
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/RSSFeeds/Error");
             }
 
             app.UseStaticFiles();
@@ -61,7 +61,7 @@ namespace NyhetsSajt
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=RSSFeeds}/{action=Index}/{id?}");
             });
         }
     }
