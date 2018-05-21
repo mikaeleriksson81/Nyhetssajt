@@ -1,4 +1,5 @@
-﻿using NyhetsSajt.Models.Json;
+﻿using NyhetsSajt.Models.Entites;
+using NyhetsSajt.Models.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,36 +19,41 @@ namespace NyhetsSajt.Models
 
             List<FeedItem> allRSSItems = new List<FeedItem>();
 
-
             foreach (string url in feedUrls)
             {
                 string RSSData = ReadXMLSource(url);
 
-                XDocument xml = ParseXMLSource(RSSData);
+                if (RSSData != null)
+                {
+                    XDocument xml = ParseXMLSource(RSSData);
+
+                    if (xml != null)
+                    {
+
+                        var feedInfo = xml.Descendants("channel").Select(x =>
+                                    new RSSFeed
+                                    {
+                                        Title = (string)x.Element("title"),
+                                        Link = GetUrl((string)x.Element("link")),
+                                        Description = (string)x.Element("description"),
+                                        Image = GetImageUrl(x)
+                                    }).SingleOrDefault();
 
 
-                var feedInfo = xml.Descendants("channel").Select(x =>
-                            new RSSFeed
-                            {
-                                Title = (string)x.Element("title"),
-                                Link = GetUrl((string)x.Element("link")),
-                                Description = (string)x.Element("description"),
-                                Image = GetImageUrl(x)
-                            }).SingleOrDefault();
+                        var RSSItems = (from x in xml.Descendants("item")
+                                        select new FeedItem
+                                        {
+                                            Title = ((string)x.Element("title")).Replace("&quot;", "''"),
+                                            Link = (string)x.Element("link"),
+                                            Description = ((string)x.Element("description")).Replace("&quot;", "''"),
+                                            PubDate = GetDateFromElement(x.Element("pubDate")),
+                                            Category = (string)x.Element("category"),
+                                            RSSFeed = feedInfo
+                                        });
 
-
-                var RSSItems = (from x in xml.Descendants("item")
-                                select new FeedItem
-                                {
-                                    Title = ((string)x.Element("title")).Replace("&quot;", "''"),
-                                    Link = (string)x.Element("link"),
-                                    Description = ((string)x.Element("description")).Replace("&quot;", "''"),
-                                    PubDate = GetDateFromElement(x.Element("pubDate")),
-                                    Category = (string)x.Element("category"),
-                                    RSSFeed = feedInfo
-                                });
-
-                allRSSItems.AddRange(RSSItems);
+                        allRSSItems.AddRange(RSSItems);
+                    }
+                }
             }
 
             return allRSSItems;
@@ -71,17 +77,36 @@ namespace NyhetsSajt.Models
 
         private static string ReadXMLSource(string url)
         {
-            string RSSData = wclient.DownloadString(url);
+            try
+            {
+                string RSSData = wclient.DownloadString(url);
 
-            return RSSData;
+                return RSSData;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            
         }
 
 
         private static XDocument ParseXMLSource(string RSSData)
-        {
-            XDocument xml = XDocument.Parse(RSSData);
+        {           
 
-            return xml;
+            try
+            {
+                XDocument xml = XDocument.Parse(RSSData);
+                return xml;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+           
+
+            
         }
 
         private static string GetUrl(string url)
@@ -107,6 +132,46 @@ namespace NyhetsSajt.Models
             }
 
             return null;
+        }
+
+
+        public static List<RSSFeedStatus> CheckRssStatus(IEnumerable<RSSUrl> rSSUrls)
+        {
+            List<RSSFeedStatus> rSSFeedStatusList = new List<RSSFeedStatus>();
+
+            foreach (var rSSUrl in rSSUrls)
+            {
+                RSSFeedStatus rSSFeedStatus = new RSSFeedStatus();
+
+                rSSFeedStatus.RssUrl = rSSUrl;
+
+                string RSSData = ReadXMLSource(rSSUrl.Url);
+
+                if (RSSData != null)
+                {
+                    XDocument xml = ParseXMLSource(RSSData);
+
+                    if (xml != null)
+                    {
+                        rSSFeedStatus.Message = "Read & parse to XML OK!";
+                        rSSFeedStatus.Active = true;
+                    }                    
+                    else
+                    {
+                        rSSFeedStatus.Message = "Error parsing to XML";
+                        rSSFeedStatus.Active = false;
+                    }
+                }
+                else
+                {
+                    rSSFeedStatus.Message = "Error reading from Url";
+                    rSSFeedStatus.Active = false;
+                }
+
+                rSSFeedStatusList.Add(rSSFeedStatus);
+            }
+
+            return rSSFeedStatusList;
         }
     }
 }

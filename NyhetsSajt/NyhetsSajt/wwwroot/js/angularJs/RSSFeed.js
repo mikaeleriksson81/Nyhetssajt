@@ -1,58 +1,70 @@
 ﻿var RSSFeedApp = angular.module('RSSFeedApp', ['ngSanitize']);
 
 
-RSSFeedApp.controller("RSSFeedCtrl", function ($scope, $http, $rootScope, $interval, $window) {
+RSSFeedApp.controller("RSSFeedCtrl", function ($scope, $http, $interval, $window) {
+
+    $scope.showingFeeds = false;
 
     $scope.GetRSSFeeds = function () {
 
-        var feedItems = [];
+        
+
+        if ($scope.feedItems === undefined)
+        {
+            $scope.feedItems = [];
+        }
+        
 
         $scope.feedUpdated = new Date();
 
         $http.get('/RSSFeeds/GetRSSFeedItems')
             .then(function (response) {
 
-                response.data.forEach(function (feedItem) {
+                response.data.forEach(function (feedItem) {                                        
 
-                    feedItems.push(feedItem);
+                    var test = $scope.feedItems.some(i => i.description === feedItem.description);
 
+                    var x = 110;
+
+                    if (!$scope.feedItems.some(i => i.title === feedItem.title))
+                    {
+                        $scope.feedItems.push(feedItem);
+                    }
+                        
                 });
-
-                $scope.feedItems = feedItems;
-
-
-            }, function (response) {
-                $scope.responseData.statusText = response.statusText;
-                $scope.responseData.status = response.status;
-
-                $rootScope.noError = false;
+            })
+            .catch(function (response) {
+                $scope.error = "Error connecting to server";
             });
+            
     };
+
+    $scope.selectedFeed = '';
 
     $scope.GetRSSFeeds();
     $interval($scope.GetRSSFeeds, 50000);
 
 
-    $scope.selectedFeed = '';
+    
 
     $scope.setFeed = function (feed) {
         $scope.selectedFeed = feed;
-    }
+    };
 
     $scope.clearFeed = function () {
         $scope.selectedFeed = '';
-    }
+    };
 
 
     $scope.selectedCategory = '';
     $scope.setCategory = function (category) {
         $scope.selectedCategory = category;
-    }
+    };
 
 
     $scope.clearCategory = function () {
         $scope.selectedCategory = '';
-    }
+    };
 
 
     $scope.redirectToUrl = function (url) {
@@ -71,12 +83,12 @@ RSSFeedApp.filter('isCategory', function () {
 
         return values.filter(function (value) {
 
-            if (value.category == null)
+            if (value.category === null)
                 return null;
 
             return value.category.toUpperCase() === category.toUpperCase();
-        })
-    }
+        });
+    };
 });
 
 
@@ -90,12 +102,12 @@ RSSFeedApp.filter('isFeed', function () {
 
         return values.filter(function (value) {
 
-            if (value.rssFeed.title == null)
+            if (value.rssFeed.title === null)
                 return null;
 
             return value.rssFeed.title === title;
-        })
-    }
+        });
+    };
 });
 
 RSSFeedApp.filter('uniqueCategory', function () {

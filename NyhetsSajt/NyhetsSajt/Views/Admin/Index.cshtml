@@ -1,0 +1,52 @@
+﻿@model IEnumerable<NyhetsSajt.Models.RSSFeedStatus>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="CreateRSSUrl">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RssUrl.FeedName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RssUrl.Url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RssUrl.FeedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RssUrl.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditRSSUrl", new { id=item.RssUrl.Id }) |
+                @Html.ActionLink("Delete", "DeleteRSSUrl", new { id=item.RssUrl.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

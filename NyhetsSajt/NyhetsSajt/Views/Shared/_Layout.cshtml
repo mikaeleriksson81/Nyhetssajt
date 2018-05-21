@@ -29,11 +29,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">NyhetsSajt</a>
+                <a asp-area="" asp-controller="RSSFeeds" asp-action="Index" class="navbar-brand">NyhetsSajt</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>
+                <ul class="nav navbar-nav" ng-if="showingFeeds">
+                    <li>                        
                         <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Feeds
                             <span class="caret"></span>
@@ -48,7 +48,7 @@
                         </ul>
 
                     </li>
-                    <li>
+                    <li ng-if="feedItems!==null">
                         <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Kategorier
                             <span class="caret"></span>

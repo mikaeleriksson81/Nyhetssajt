@@ -1,26 +1,39 @@
 ﻿<br />
 
-<div>
 
-    RSS Feeds hämtades klockan: {{feedUpdated | date:'HH:mm,   yyyy-MM-dd MMM  '}} (sidan uppdateras automatiskt)
+<div ng-init="showingFeeds=true">
 
+    <div id="fetchDate">
+        <div class="row">
+            <div class="col-xs-12 col-lg-6 align-text-left">
+                <div ng-if="selectedCategory || selectedFeed">
+                    <b>Filtrering:</b>
+                    <text id="selectedCategory" ng-if="selectedCategory">
+                        {{selectedCategory}} <a href="#" ng-click="clearCategory()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </text>
+                    <text id="selectedFeed" ng-if="selectedFeed">
+                        {{selectedFeed.title}} <a href="#" ng-click="clearFeed()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </text>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-6">
+               {{feedItems.length}} RSS Feeds hämtades {{feedUpdated | date:'yyyy-MM-dd, HH:mm'}} (sidan uppdateras automatiskt)
+            </div>
+        </div>
+        
+    </div>
+    
+    <hr />
+    {{error}}
 
-    <div id="selectedFeed" ng-if="!!selectedFeed">
+    <div id="selected" ng-if="!!selectedFeed">
         <h1>{{selectedFeed.title}}</h1>
         {{selectedFeed.description}}
         <br />
         <a href="{{ selectedFeed.link }}" target="_blank">{{ selectedFeed.link }}</a>        
     </div>
 
-    <div ng-if="selectedCategory || selectedFeed">
-        Filtrering:
-        <text ng-if="selectedCategory">
-            {{selectedCategory}} <a href="#" ng-click="clearCategory()">X</a>
-        </text>
-        <text ng-if="selectedFeed">
-            {{selectedFeed.title}} <a href="#" ng-click="clearFeed()">X</a>
-        </text>
-    </div>
+    
 
     <div class="row auto-clear">
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 feedItem" ng-repeat="item in feedItems | isCategory:selectedCategory | isFeed:selectedFeed.title">
@@ -43,21 +56,22 @@
 
                         </div>
                     </td>
-                </tr>
+                </tr>            
+
                 <tr>
                     <td colspan="2">
-                        <text ng-if="!!item.category">
-                            Kategori: <a href="#" ng-click="setCategory(item.category)">{{item.category}}</a>
+                        <text ng-if="item.category">
+                            <b>Kategori:</b> <a href="#" ng-click="setCategory(item.category)">{{item.category}}</a>
                         </text>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Feed: <a href="#" ng-click="setFeed(item.rssFeed)">{{item.rssFeed.title}}</a>
+                        <b>Feed:</b> <a href="#" ng-click="setFeed(item.rssFeed)">{{item.rssFeed.title}}</a>
                         @*endast Expressen har en fungerande logga*@
                         @*<img ng-src="{{item.rssFeed.image}}" ng-if="!!item.rssFeed.image" />*@
                     </td>
-                    <td>
+                    <td align="right">
                         
                         <a href="{{ item.link }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Läs mer</a>
                     </td>
