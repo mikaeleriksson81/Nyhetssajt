@@ -1,36 +1,34 @@
 ﻿var RSSFeedApp = angular.module('RSSFeedApp', ['ngSanitize']);
 
 
-RSSFeedApp.controller("RSSFeedCtrl", function ($scope, $http, $interval, $window) {
+RSSFeedApp.controller("RSSFeedCtrl", function ($scope, $http, $interval, $window, $filter) {
 
     $scope.showingFeeds = false;
 
-    $scope.GetRSSFeeds = function () {
-
-        
+    $scope.GetRSSFeeds = function () {        
 
         if ($scope.feedItems === undefined)
         {
             $scope.feedItems = [];
         }
-        
+
+        console.log("Fetching feeds..");
 
         $scope.feedUpdated = new Date();
 
-        $http.get('/RSSFeeds/GetRSSFeedItems')
+        $http.get('/RSSFeeds/GetRSSFeedItems? rnd =' + new Date().getTime())
             .then(function (response) {
 
                 response.data.forEach(function (feedItem) {                                        
 
-                    var test = $scope.feedItems.some(i => i.description === feedItem.description);
+                    this.duplicate = IsDuplicate($scope.feedItems, feedItem.link);
 
-                    var x = 110;
-
-                    if (!$scope.feedItems.some(i => i.title === feedItem.title))
-                    {
+                    if (this.duplicate === false) {
                         $scope.feedItems.push(feedItem);
                     }
-                        
+
+                    $scope.error = '';
+
                 });
             })
             .catch(function (response) {
@@ -42,7 +40,7 @@ RSSFeedApp.controller("RSSFeedCtrl", function ($scope, $http, $interval, $window
     $scope.selectedFeed = '';
 
     $scope.GetRSSFeeds();
-    $interval($scope.GetRSSFeeds, 50000);
+    $interval($scope.GetRSSFeeds, 60000);
 
 
     
@@ -70,6 +68,24 @@ RSSFeedApp.controller("RSSFeedCtrl", function ($scope, $http, $interval, $window
     $scope.redirectToUrl = function (url) {
         $window.open(url, '_blank');
     };
+
+
+    //Would rather use LINQ but it caused issues in IE11
+    var IsDuplicate = function (feedArray, link) {
+
+        this.duplicate = false;
+
+        feedArray.forEach(function (obj) {
+
+            if (obj.link === link)
+                this.duplicate = true;
+        });
+
+        if (this.duplicate === false)
+            return false;       
+        else
+            return true;
+    }
 
 
 });
@@ -157,3 +173,4 @@ RSSFeedApp.filter('uniqueFeed', function () {
         return unique;
     };
 });
+

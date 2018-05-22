@@ -38,8 +38,8 @@ namespace NyhetsSajt.Controllers
 
             var allRSSItems = RSSFeedHelpers.GetRSSFeedItems(feedUrls);
 
-
-            return Json(allRSSItems.OrderByDescending(i => i.PubDate));
+            return Json(allRSSItems);
+            //return Json(allRSSItems.OrderByDescending(i => i.PubDate));
         }
 
         public IActionResult Error()

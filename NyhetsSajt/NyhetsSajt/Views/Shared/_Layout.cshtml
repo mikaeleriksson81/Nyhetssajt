@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html xmlns:ng="http://angularjs.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +33,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" ng-if="showingFeeds">
-                    <li>                        
+                    <li>
                         <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Feeds
                             <span class="caret"></span>
@@ -62,7 +62,7 @@
                             </li>
                         </ul>
 
-                    </li>                    
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
