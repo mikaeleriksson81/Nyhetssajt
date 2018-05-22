@@ -33,13 +33,14 @@ namespace NyhetsSajt.Controllers
             //                        "http://www.expressen.se/Pages/OutboundFeedsPage.aspx?id=3642159&viewstyle=rss",
             //                        "https://www.svd.se/?service=rss"
             //};
-
+            
             var feedUrls = db.RSSUrls.Select(r=>r.Url).ToList();
 
             var allRSSItems = RSSFeedHelpers.GetRSSFeedItems(feedUrls);
 
-            return Json(allRSSItems);
-            //return Json(allRSSItems.OrderByDescending(i => i.PubDate));
+            
+
+            return Json(allRSSItems);            
         }
 
         public IActionResult Error()

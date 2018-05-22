@@ -13,10 +13,11 @@ namespace NyhetsSajt.Models
     {
         private readonly static WebClient wclient = new WebClient();
 
-
+        /// <summary>
+        /// Takes a List of strings containing RSS Feed Urls and parses its Xml content into a List of class FeedItem.
+        /// </summary>
         internal static IEnumerable<FeedItem> GetRSSFeedItems(IEnumerable<string> feedUrls)
         {
-
             List<FeedItem> allRSSItems = new List<FeedItem>();
 
             foreach (string url in feedUrls)
@@ -29,17 +30,17 @@ namespace NyhetsSajt.Models
 
                     if (xml != null)
                     {
-
+                        //Extracts channel data
                         var feedInfo = xml.Descendants("channel").Select(x =>
                                     new RSSFeed
                                     {
                                         Title = (string)x.Element("title"),
                                         Link = GetUrl((string)x.Element("link")),
                                         Description = (string)x.Element("description"),
-                                        Image = GetImageUrl(x)
+                                        Image = GetImageUrl(x.Element("image"))
                                     }).SingleOrDefault();
 
-
+                        //Extracts article data
                         var RSSItems = (from x in xml.Descendants("item")
                                         select new FeedItem
                                         {
@@ -59,7 +60,9 @@ namespace NyhetsSajt.Models
             return allRSSItems;
         }
 
-
+        /// <summary>
+        /// Extracts date from XElement and converts it to a short date and time string.
+        /// </summary>
         private static string GetDateFromElement(XElement xElement)
         {
             if ((string)xElement == null)
@@ -74,7 +77,9 @@ namespace NyhetsSajt.Models
             return $"{shortDate}, {shortTime} ";
         }
 
-
+        /// <summary>
+        /// Downloads the requested URl as a string. Try/Catch included.
+        /// </summary>
         private static string ReadXMLSource(string url)
         {
             try
@@ -83,32 +88,31 @@ namespace NyhetsSajt.Models
 
                 return RSSData;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
-            }
-
-            
+            }            
         }
 
-
+        /// <summary>
+        /// Creates a new XDocument from a string. Try/Catch included. 
+        /// </summary>
         private static XDocument ParseXMLSource(string RSSData)
-        {           
-
+        {
             try
             {
                 XDocument xml = XDocument.Parse(RSSData);
                 return xml;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return null;
             }
-           
-
-            
         }
 
+        /// <summary>
+        /// Removes last slash in string url, if present.
+        /// </summary>
         private static string GetUrl(string url)
         {
             if (url != null)
@@ -123,18 +127,22 @@ namespace NyhetsSajt.Models
             return null;
         }
 
-
+        /// <summary>
+        /// Extracts url from XElement image, if XElement image exists.
+        /// </summary>
         private static string GetImageUrl(XElement xe)
         {
-            if (xe.Element("image") != null)
+            if (xe != null)
             {
-                return (string)xe.Element("image").Element("url");
+                return (string)xe.Element("url");
             }
 
             return null;
         }
 
-
+        /// <summary>
+        /// Checks if RSS Urls are donwloadable and parseable
+        /// </summary>
         public static List<RSSFeedStatus> CheckRssStatus(IEnumerable<RSSUrl> rSSUrls)
         {
             List<RSSFeedStatus> rSSFeedStatusList = new List<RSSFeedStatus>();
