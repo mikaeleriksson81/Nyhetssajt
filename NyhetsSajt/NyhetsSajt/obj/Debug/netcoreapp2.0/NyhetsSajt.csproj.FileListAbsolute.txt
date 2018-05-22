@@ -21,4 +21,3 @@ C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\obj\Debug\netco
 C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.AssemblyInfo.cs
 C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.dll
 C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.pdb
-C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.csprojAssemblyReference.cache
