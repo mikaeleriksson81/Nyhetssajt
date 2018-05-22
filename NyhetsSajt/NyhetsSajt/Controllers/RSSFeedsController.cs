@@ -26,8 +26,7 @@ namespace NyhetsSajt.Controllers
         public IActionResult GetRSSFeedItems()
         {
 
-            //Ifall databasen krånglar går det att manuellt köra med några url:er
-
+            //Backup sources incase trouble with the database
             //List<string> feedUrls = new List<string> {
             //                        "http://www.nt.se/nyheter/norrkoping/rss/",
             //                        "http://www.expressen.se/Pages/OutboundFeedsPage.aspx?id=3642159&viewstyle=rss",
@@ -36,9 +35,7 @@ namespace NyhetsSajt.Controllers
             
             var feedUrls = db.RSSUrls.Select(r=>r.Url).ToList();
 
-            var allRSSItems = RSSFeedHelpers.GetRSSFeedItems(feedUrls);
-
-            
+            var allRSSItems = RSSFeedHelpers.GetRSSFeedItems(feedUrls);            
 
             return Json(allRSSItems);            
         }
