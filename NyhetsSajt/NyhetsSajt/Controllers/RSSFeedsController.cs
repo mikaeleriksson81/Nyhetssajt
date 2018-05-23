@@ -4,18 +4,18 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using NyhetsSajt.Data;
+using NyhetsSajt.Interfaces;
 using NyhetsSajt.Models;
 
 namespace NyhetsSajt.Controllers
 {
     public class RSSFeedsController : Controller
     {
-        private readonly ApplicationDbContext db;
+        private readonly IRSSFeedsRepository _rSSFeedsRepository;
 
-        public RSSFeedsController(ApplicationDbContext context)
+        public RSSFeedsController(IRSSFeedsRepository rSSFeedsRepository)
         {
-            db = context;
+            _rSSFeedsRepository = rSSFeedsRepository;            
         }
 
         public IActionResult Index()
@@ -32,13 +32,15 @@ namespace NyhetsSajt.Controllers
             //                        "http://www.expressen.se/Pages/OutboundFeedsPage.aspx?id=3642159&viewstyle=rss",
             //                        "https://www.svd.se/?service=rss"
             //};
-            
-            var feedUrls = db.RSSUrls.Select(r=>r.Url).ToList();
+
+            var feedUrls = _rSSFeedsRepository.GetRSSUrlsAsString();
 
             var allRSSItems = RSSFeedHelpers.GetRSSFeedItems(feedUrls);            
 
             return Json(allRSSItems);            
         }
+
+
 
         public IActionResult Error()
         {

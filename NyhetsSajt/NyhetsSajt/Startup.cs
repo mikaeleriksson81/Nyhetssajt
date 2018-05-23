@@ -10,7 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NyhetsSajt.Data;
 using NyhetsSajt.Models;
-using NyhetsSajt.Services;
+using NyhetsSajt.Interfaces;
+using NyhetsSajt.Repositories;
 
 namespace NyhetsSajt
 {
@@ -33,8 +34,7 @@ namespace NyhetsSajt
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IRSSFeedsRepository, RSSFeedsRepository>();
 
             services.AddMvc();
         }

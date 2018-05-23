@@ -4,12 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using NyhetsSajt.Data;
 using NyhetsSajt.Models;
 using NyhetsSajt.Models.Entites;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http;
-using System.Net;
+using NyhetsSajt.Interfaces;
 
 namespace NyhetsSajt.Controllers
 {
@@ -17,17 +14,17 @@ namespace NyhetsSajt.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private readonly ApplicationDbContext db;
+        private readonly IRSSFeedsRepository _rSSFeedsRepository;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(IRSSFeedsRepository rSSFeedsRepository)
         {
-            db = context;
+            _rSSFeedsRepository = rSSFeedsRepository;
         }
 
 
         public IActionResult Index()
         {
-            var feedUrls = db.RSSUrls.ToList();
+            var feedUrls = _rSSFeedsRepository.GetRSSUrls();
 
             List<RSSFeedStatus> rSSFeedStatusList = RSSFeedHelpers.CheckRssStatus(feedUrls);
 
@@ -44,8 +41,7 @@ namespace NyhetsSajt.Controllers
         {
             if(ModelState.IsValid)
             {
-                db.RSSUrls.Add(rSSUrl);
-                db.SaveChanges();
+                _rSSFeedsRepository.CreateRSSUrl(rSSUrl);
                 return RedirectToAction("Index");
             }
             return View(rSSUrl);
@@ -53,9 +49,9 @@ namespace NyhetsSajt.Controllers
 
         public IActionResult EditRSSUrl(int id)
         {
-            RSSUrl rSSUrl = db.RSSUrls.SingleOrDefault(r=>r.Id == id);
+            RSSUrl rSSUrl = _rSSFeedsRepository.GetRSSUrl(id);
 
-            if(rSSUrl== null)
+            if (rSSUrl == null)
             {
                 return StatusCode(404);
             }
@@ -67,8 +63,7 @@ namespace NyhetsSajt.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rSSUrl).State = EntityState.Modified;
-                db.SaveChanges();
+                _rSSFeedsRepository.EditRSSUrl(rSSUrl);
                 return RedirectToAction("Index");
             }
             return View(rSSUrl);
@@ -77,15 +72,15 @@ namespace NyhetsSajt.Controllers
         
         public IActionResult DeleteRSSUrl(int id)
         {
-            RSSUrl rSSUrl = db.RSSUrls.SingleOrDefault(r => r.Id == id);
+            RSSUrl rSSUrl = _rSSFeedsRepository.GetRSSUrl(id);
 
             if (rSSUrl == null)
             {
-                return StatusCode(404);
+                return NotFound();
             }
 
-            db.Entry(rSSUrl).State = EntityState.Deleted;
-            db.SaveChanges();
+            _rSSFeedsRepository.DeleteRSSUrl(rSSUrl);
+
             return RedirectToAction("Index");
         }
     }

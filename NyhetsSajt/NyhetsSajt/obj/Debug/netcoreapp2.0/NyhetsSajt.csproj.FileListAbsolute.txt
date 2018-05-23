@@ -1,15 +1,3 @@
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.csprojAssemblyReference.cache
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.csproj.CoreCompileInputs.cache
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.AssemblyInfoInputs.cache
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.AssemblyInfo.cs
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.deps.json
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.runtimeconfig.json
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.runtimeconfig.dev.json
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.dll
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.pdb
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.dll
-C:\Users\Gabor\Source\Repos\NyhetsSajtRep\NyhetsSajt\NyhetsSajt\obj\Debug\netcoreapp2.0\NyhetsSajt.pdb
 C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.deps.json
 C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.runtimeconfig.json
 C:\Users\Deltagare\Source\Repos\Nyhetssajt\NyhetsSajt\NyhetsSajt\bin\Debug\netcoreapp2.0\NyhetsSajt.runtimeconfig.dev.json
