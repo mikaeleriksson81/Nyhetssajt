@@ -155,20 +155,15 @@ RSSFeedApp.filter('uniqueFeed', function () {
         var unique = [],
             keys = [];
 
-
         angular.forEach(collection, function (item) {
 
-            var key = item.rssFeed[keyname];
-
-            //alert(item.rssFeed.title);
+            var key = item.rssFeed[keyname];            
 
             if (keys.indexOf(key) === -1) {
                 keys.push(key);
                 unique.push(item);
             }
         });
-
-        var x = 10;
 
         return unique;
     };

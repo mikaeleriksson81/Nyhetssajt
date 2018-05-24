@@ -12072,7 +12072,7 @@
       ]
     },
     "System.Security.Cryptography.Xml/4.4.2": {
-      "sha512": "q9Dren/YP5jhRCkDvLfuaPpMTQzP97ANvzq/OoGgwK8YdLRSTABS9oW5/23OKoM2DRCuBrh4qaecD2YNhPtuzQ==",
+      "sha512": "1m+fKVrApgKYMRuE0MF0vGjqy4XqAp1rCtyAzMXhJajMDDytMh/rHk9hp4M7KKk3QQZoWJUvyUY7xcw74w+JiQ==",
       "type": "package",
       "path": "system.security.cryptography.xml/4.4.2",
       "files": [
@@ -13259,23 +13259,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gabor\\.nuget\\packages\\": {},
+    "C:\\Users\\Deltagare\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gabor\\source\\repos\\NyhetsSajtRep\\NyhetsSajt\\NyhetsSajt\\NyhetsSajt.csproj",
+      "projectUniqueName": "C:\\Users\\Deltagare\\Source\\Repos\\Nyhetssajt\\NyhetsSajt\\NyhetsSajt\\NyhetsSajt.csproj",
       "projectName": "NyhetsSajt",
-      "projectPath": "C:\\Users\\Gabor\\source\\repos\\NyhetsSajtRep\\NyhetsSajt\\NyhetsSajt\\NyhetsSajt.csproj",
-      "packagesPath": "C:\\Users\\Gabor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gabor\\source\\repos\\NyhetsSajtRep\\NyhetsSajt\\NyhetsSajt\\obj\\",
+      "projectPath": "C:\\Users\\Deltagare\\Source\\Repos\\Nyhetssajt\\NyhetsSajt\\NyhetsSajt\\NyhetsSajt.csproj",
+      "packagesPath": "C:\\Users\\Deltagare\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Deltagare\\Source\\Repos\\Nyhetssajt\\NyhetsSajt\\NyhetsSajt\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Gabor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Deltagare\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

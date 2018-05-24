@@ -1,0 +1,27 @@
+﻿Mikael Eriksson 				2018-05-24
+
+
+Kort fakta om webb-applikationen ”NyhetsSajt”.
+
+Beskrivning
+
+https://github.com/mikaeleriksson81/Nyhetssajt	
+NyhetsSajt är en webbapplikation som visar kortfattade nyheter sammanställda från olika RSS källor. 
+
+Back-End
+
+Applikationen använder en SQL relationsdatabas uppbyggd efter code-first approach principen, samt migrationer.
+Databasen skapas automatiskt om den inte redan existerar och seedas därefter med en Admin användare, samt några RSS feed url:er.
+Applikationen är uppbyggd med ASP.Net Core 2 MVC och har som jobb att läsa in och slå ihop RSS url:er för att sedan förse Front-End med ett Json Object.
+Admin kan lägga till, ta bort och editera RSS url:er.
+Unit-tester är gjord på Admin-controllern, men ännu inte på de andra delarna.
+
+Front-End
+
+Front-End är uppbyggd med AngularJS och skulle kunna flyttas till ett eget projekt om så önskas. 
+Hela sidan är en ”one-page” applikation, förutom Admin delen som är traditionell ASP server-baserad. 
+Alla nyheter visas sorterade efter datum och man kan filtrera på källa och kategori.
+Rubriker och innehåll gällande kategorier och käll-undersidor skapas automatiskt och inga av dem är hårdkodade på sidan.
+Dvs läser man in RSS feeds som bara handlar om sport, så kommer troligtvis ingen kategori om politk 
+finnas.
+
